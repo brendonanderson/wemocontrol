@@ -1,0 +1,38 @@
+apply plugin: "groovy"
+apply plugin:'application'
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ["src"]
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.2.1'
+    compile "org.codehaus.groovy.modules.http-builder:http-builder:0.6"
+    runtime 'commons-cli:commons-cli:1.2'
+}
+
+task uberjar(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+    manifest {
+        attributes 'Main-Class': 'Upnp'
+    }
+}
+
+task(runUpnp, type: JavaExec) {
+    main = "Upnp"
+//    args "-h"
+//    args "-d", "-i", "en1", "-t", "20000"
+    args "-i", "en1", "-e", "http://192.168.1.120:49153/setup.xml", "-s"
+//    args "-i", "en1", "-e", "http://192.168.1.120:49153/setup.xml", "-n"
+//    args "-i", "en1", "-e", "http://192.168.1.120:49153/setup.xml", "-f"
+    classpath = sourceSets.main.runtimeClasspath
+}
