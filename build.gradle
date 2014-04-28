@@ -1,5 +1,5 @@
 apply plugin: "groovy"
-apply plugin:'application'
+apply plugin: 'application'
 
 sourceSets {
     main {
@@ -19,7 +19,7 @@ dependencies {
     runtime 'commons-cli:commons-cli:1.2'
 }
 
-task uberjar(type: Jar) {
+task uberjar(type: Jar, dependsOn: build) {
     from files(sourceSets.main.output.classesDir)
     from configurations.runtime.asFileTree.files.collect { zipTree(it) }
     manifest {

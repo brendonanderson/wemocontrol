@@ -43,7 +43,7 @@ Device status:
             println("found ${endpoints.size()} endpoints")
             endpoints.each { String it ->
                 WemoDevice dev = new WemoDevice(it)
-                println("${dev.name} at endpoint: ${it}")
+                println("${dev.name},${it}")
             }
         } else if (options.s && options.i && options.e) {
             WemoDevice wemoDevice = new WemoDevice(options.e)

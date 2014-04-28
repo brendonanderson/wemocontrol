@@ -41,7 +41,7 @@ class UpnpDiscovery {
             try {
                 recSocket.receive(input)
                 String originaldata = new String(input.data)
-                println originaldata
+//                log.info(originaldata)
                 if (originaldata.toLowerCase().indexOf("location:") > -1) {
                     String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
                     location = location.substring(0, location.indexOf("\n"))
@@ -53,6 +53,7 @@ class UpnpDiscovery {
 //                log.info("socket timeout")
             }
         }
+        recSocket.leaveGroup(InetAddress.getByName("239.255.255.250"))
         recSocket.disconnect()
         recSocket.close()
     }
@@ -66,7 +67,7 @@ class UpnpDiscovery {
             packet.append( "M-SEARCH * HTTP/1.1\r\n" )
             packet.append( "HOST: 239.255.255.250:1900\r\n" )
             packet.append( "MAN: \"ssdp:discover\"\r\n" )
-            packet.append( "MX: ").append( "5" ).append( "\r\n" )
+            packet.append( "MX: ").append( "2" ).append( "\r\n" )
 //            packet.append( "ST: " ).append( "ssdp:all" ).append( "\r\n" ).append( "\r\n" )
             packet.append( "ST: " ).append( "urn:Belkin:device:controllee:1" ).append( "\r\n" ).append( "\r\n" )
             byte[] data = packet.toString().bytes
