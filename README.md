@@ -13,3 +13,7 @@ How to:
 1.  Search for WeMo devices (`java -jar wemocontrol.jar -d -i en1 -t 20000` where en1 is your network interface name)
 1.  Turn on a device that was discovered (`java -jar wemocontrol.jar -i en1 -e http://192.168.1.120:49153/setup.xml -n`)
 1.  Turn off a device that was discovered (`java -jar wemocontrol.jar -i en1 -e http://192.168.1.120:49153/setup.xml -f`)
+
+See this blog post for details: http://www.objectpartners.com/2014/03/25/a-groovy-time-with-upnp-and-wemo/
+
+
