@@ -42,14 +42,7 @@ class UpnpDiscovery {
             try {
                 recSocket.receive(input)
                 def processThread = Thread.start {
-                    String originaldata = new String(input.data)
-    //                log.info(originaldata)
-                    if (originaldata.toLowerCase().indexOf("location:") > -1) {
-                        String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
-                        location = location.substring(0, location.indexOf("\n"))
-                        location = location.substring(location.indexOf(":") + 1, location.length())
-                        endpoints.add(location.trim())
-                    }
+                    processPacket(input)
                 }
                 processThreads.add(processThread)
 
@@ -61,6 +54,16 @@ class UpnpDiscovery {
         recSocket.leaveGroup(InetAddress.getByName("239.255.255.250"))
         recSocket.disconnect()
         recSocket.close()
+    }
+    private void processPacket(DatagramPacket packet) {
+        String originaldata = new String(packet.data)
+        log.info(originaldata)
+        if (originaldata.toLowerCase().indexOf("location:") > -1) {
+            String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
+            location = location.substring(0, location.indexOf("\n"))
+            location = location.substring(location.indexOf(":") + 1, location.length())
+            endpoints.add(location.trim())
+        }
     }
 
     private void discover() {
