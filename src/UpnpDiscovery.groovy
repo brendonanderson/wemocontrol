@@ -58,11 +58,13 @@ class UpnpDiscovery {
     private void processPacket(DatagramPacket packet) {
         String originaldata = new String(packet.data)
         log.info(originaldata)
-        if (originaldata.toLowerCase().indexOf("location:") > -1) {
-            String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
-            location = location.substring(0, location.indexOf("\n"))
-            location = location.substring(location.indexOf(":") + 1, location.length())
-            endpoints.add(location.trim())
+        if (originaldata.contains("urn:Belkin:device:controllee") || originaldata.contains("urn:Belkin:device:lightswitch")) {
+            if (originaldata.toLowerCase().indexOf("location:") > -1) {
+                String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
+                location = location.substring(0, location.indexOf("\n"))
+                location = location.substring(location.indexOf(":") + 1, location.length())
+                endpoints.add(location.trim())
+            }
         }
     }
 
@@ -75,7 +77,7 @@ class UpnpDiscovery {
             packet.append( "M-SEARCH * HTTP/1.1\r\n" )
             packet.append( "HOST: 239.255.255.250:1900\r\n" )
             packet.append( "MAN: \"ssdp:discover\"\r\n" )
-            packet.append( "MX: ").append( "5" ).append( "\r\n" )
+            packet.append( "MX: ").append( "3" ).append( "\r\n" )
             packet.append( "ST: " ).append( "ssdp:all" ).append( "\r\n" ).append( "\r\n" )
 //            packet.append( "ST: " ).append( "urn:Belkin:device:controllee:1" ).append( "\r\n" ).append( "\r\n" )
             byte[] data = packet.toString().bytes
