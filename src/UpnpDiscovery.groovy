@@ -76,8 +76,8 @@ class UpnpDiscovery {
             packet.append( "HOST: 239.255.255.250:1900\r\n" )
             packet.append( "MAN: \"ssdp:discover\"\r\n" )
             packet.append( "MX: ").append( "5" ).append( "\r\n" )
-//            packet.append( "ST: " ).append( "ssdp:all" ).append( "\r\n" ).append( "\r\n" )
-            packet.append( "ST: " ).append( "urn:Belkin:device:controllee:1" ).append( "\r\n" ).append( "\r\n" )
+            packet.append( "ST: " ).append( "ssdp:all" ).append( "\r\n" ).append( "\r\n" )
+//            packet.append( "ST: " ).append( "urn:Belkin:device:controllee:1" ).append( "\r\n" ).append( "\r\n" )
             byte[] data = packet.toString().bytes
             log.info("sending discovery packet")
             socket.send(new DatagramPacket(data, data.length, socketAddress))
