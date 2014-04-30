@@ -57,7 +57,7 @@ class UpnpDiscovery {
     }
     private void processPacket(DatagramPacket packet) {
         String originaldata = new String(packet.data)
-        log.info(originaldata)
+//        log.info(originaldata)
         if (originaldata.contains("urn:Belkin:device:controllee") || originaldata.contains("urn:Belkin:device:lightswitch")) {
             if (originaldata.toLowerCase().indexOf("location:") > -1) {
                 String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
