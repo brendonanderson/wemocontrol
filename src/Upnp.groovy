@@ -40,7 +40,7 @@ Device status:
         } else if (options.d && options.i && options.t) {
             UpnpDiscovery listener = new UpnpDiscovery(options.i, options.t as Long)
             Set endpoints = listener.getEndpoints()
-            println("found ${endpoints.size()} endpoints")
+            //println("found ${endpoints.size()} endpoints")
             endpoints.each { String it ->
                 WemoDevice dev = new WemoDevice(it)
                 println("${dev.name},${it}")
