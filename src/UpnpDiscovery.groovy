@@ -42,11 +42,13 @@ class UpnpDiscovery {
                 recSocket.receive(input)
                 String originaldata = new String(input.data)
 //                log.info(originaldata)
-                if (originaldata.toLowerCase().indexOf("location:") > -1) {
-                    String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
-                    location = location.substring(0, location.indexOf("\n"))
-                    location = location.substring(location.indexOf(":") + 1, location.length())
-                    endpoints.add(location.trim())
+                if (originaldata.contains("urn:Belkin:device:controllee") || originaldata.contains("urn:Belkin:device:lightswitch")) {
+                    if (originaldata.toLowerCase().indexOf("location:") > -1) {
+                        String location = originaldata.substring(originaldata.toLowerCase().indexOf("location:"))
+                        location = location.substring(0, location.indexOf("\n"))
+                        location = location.substring(location.indexOf(":") + 1, location.length())
+                        endpoints.add(location.trim())
+                    }
                 }
 
             } catch (SocketTimeoutException e) {
