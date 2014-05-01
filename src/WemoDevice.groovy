@@ -128,7 +128,7 @@ class WemoDevice {
             }
         }
     }
-
+    
     public String getLogFileURL() {
         String logUrl = null
         HTTPBuilder http = new HTTPBuilder("http://${ipAddress}:${port}/upnp/control/basicevent1")
@@ -143,5 +143,6 @@ class WemoDevice {
         }
         logUrl
     }
+
 
 }
