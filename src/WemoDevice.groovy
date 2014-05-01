@@ -74,5 +74,74 @@ class WemoDevice {
             }
         }
     }
+    public Integer getSignalStrength() {
+        Integer signal = null
+        HTTPBuilder http = new HTTPBuilder("http://${ipAddress}:${port}/upnp/control/basicevent1")
+        http.request(Method.POST, ContentType.XML) {
+            body = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:GetSignalStrength xmlns:u="urn:Belkin:service:basicevent:1"><SignalStrength>1</SignalStrength></u:GetSignalStrength></s:Body></s:Envelope>'
+            headers.'SOAPACTION' = "\"urn:Belkin:service:basicevent:1#GetSignalStrength\""
+            headers.'Content-Type' = "text/xml; charset=\"utf-8\""
+            headers.'Accept' = ""
+            response.success = { resp, xml ->
+                signal = xml.Body.GetSignalStrengthResponse.SignalStrength.text() as Integer
+            }
+        }
+        signal
+    }
+    public String getIconURL() {
+        String iconUrl = null
+        HTTPBuilder http = new HTTPBuilder("http://${ipAddress}:${port}/upnp/control/basicevent1")
+        http.request(Method.POST, ContentType.XML) {
+            body = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:GetIconURL xmlns:u="urn:Belkin:service:basicevent:1"><URL>1</URL></u:GetIconURL></s:Body></s:Envelope>'
+            headers.'SOAPACTION' = "\"urn:Belkin:service:basicevent:1#GetIconURL\""
+            headers.'Content-Type' = "text/xml; charset=\"utf-8\""
+            headers.'Accept' = ""
+            response.success = { resp, xml ->
+                iconUrl = xml.Body.GetIconURLResponse.URL.text()
+            }
+        }
+        iconUrl
+    }
+
+    public String getFriendlyName() {
+        String friendlyName = null
+        HTTPBuilder http = new HTTPBuilder("http://${ipAddress}:${port}/upnp/control/basicevent1")
+        http.request(Method.POST, ContentType.XML) {
+            body = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:GetFriendlyName xmlns:u="urn:Belkin:service:basicevent:1"><FriendlyName>1</FriendlyName></u:GetFriendlyName></s:Body></s:Envelope>'
+            headers.'SOAPACTION' = "\"urn:Belkin:service:basicevent:1#GetFriendlyName\""
+            headers.'Content-Type' = "text/xml; charset=\"utf-8\""
+            headers.'Accept' = ""
+            response.success = { resp, xml ->
+                friendlyName = xml.Body.GetFriendlyNameResponse.FriendlyName.text()
+            }
+        }
+        friendlyName
+    }
+    public void setFriendlyName(String friendlyName) {
+        HTTPBuilder http = new HTTPBuilder("http://${ipAddress}:${port}/upnp/control/basicevent1")
+        http.request(Method.POST, ContentType.XML) {
+            body = """<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:ChangeFriendlyName xmlns:u="urn:Belkin:service:basicevent:1"><FriendlyName>${friendlyName}</FriendlyName></u:ChangeFriendlyName></s:Body></s:Envelope>"""
+            headers.'SOAPACTION' = "\"urn:Belkin:service:basicevent:1#ChangeFriendlyName\""
+            headers.'Content-Type' = "text/xml; charset=\"utf-8\""
+            headers.'Accept' = ""
+            response.success = { resp, xml ->
+            }
+        }
+    }
+
+    public String getLogFileURL() {
+        String logUrl = null
+        HTTPBuilder http = new HTTPBuilder("http://${ipAddress}:${port}/upnp/control/basicevent1")
+        http.request(Method.POST, ContentType.XML) {
+            body = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:GetLogFileURL xmlns:u="urn:Belkin:service:basicevent:1"><LOGURL>1</LOGURL></u:GetLogFileURL></s:Body></s:Envelope>'
+            headers.'SOAPACTION' = "\"urn:Belkin:service:basicevent:1#GetLogFileURL\""
+            headers.'Content-Type' = "text/xml; charset=\"utf-8\""
+            headers.'Accept' = ""
+            response.success = { resp, xml ->
+                logUrl = xml.Body.GetLogFileURLResponse.LOGURL.text()
+            }
+        }
+        logUrl
+    }
 
 }
